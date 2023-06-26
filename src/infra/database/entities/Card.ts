@@ -29,7 +29,7 @@ export class Card {
     updatedAt: Date
 
     @ManyToOne(() => CardType, type => type.cards)
-    @JoinColumn({name: 'type', referencedColumnName: 'id'})
+    @JoinColumn({name: 'id_type', referencedColumnName: 'id'})
     type: CardType
 
     @ManyToOne(() => User, user => user.cards)

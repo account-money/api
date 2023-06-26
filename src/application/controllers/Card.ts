@@ -20,7 +20,7 @@ class CardController {
             user: z.string()
           });
         try {
-            const data = validateFields<CreateCard>(cardSchema, Object.assign({}, req.body, {user: req.user}))
+            const data = validateFields<CreateCard>(cardSchema, Object.assign({}, req.body))
             const card = await this.cardUsecase.insert(data);
             res.json(card)
         }catch(e: any | unknown){
@@ -30,13 +30,13 @@ class CardController {
     }
     get = async(req: Request, res: Response): Promise<void> => {
         const cardSchema = z.object({
-            flag: z.string(),
-            number: z.number(),
-            limit: z.number(),
-            current: z.number(),
-            close: z.date(),
-            type: z.string(),
-            user: z.string()
+            flag: z.string().optional(),
+            number: z.number().optional(),
+            limit: z.number().optional(),
+            current: z.number().optional(),
+            close: z.date().optional(),
+            type: z.string().optional(),
+            user: z.string().optional()
           });
         try {
             const data = validateFields<GetCard>(cardSchema, req.body)
@@ -83,7 +83,7 @@ class CardController {
             type: z.string().optional()
           });
         try {
-            const data = validateFields<UpdateCard>(cardSchema, Object.assign({}, req.body, {user: req.user}, {id: req.params.id}))
+            const data = validateFields<UpdateCard>(cardSchema, Object.assign({}, req.body, {id: req.params.id}))
             const card = await this.cardUsecase.update(data);
             res.json(card)
         }catch(e: any | unknown){

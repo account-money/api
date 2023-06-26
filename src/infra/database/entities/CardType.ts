@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, JoinColumn, OneToMany, OneToOne } from "typeorm"
 import { Card } from "./Card"
 
-@Entity({name: 'revenues'})
+@Entity({name: 'cards_type'})
 export class CardType {
     @PrimaryColumn()
     id: string

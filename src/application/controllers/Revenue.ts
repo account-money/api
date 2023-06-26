@@ -13,24 +13,25 @@ class RevenueController {
         const revenueSchema = z.object({
             name: z.string(),
             value: z.number(),
-            receivedAt: z.date(),
+            receivedAt: z.string(),
             user: z.string()
           });
         try {
-            const data = validateFields<CreateRevenue>(revenueSchema, Object.assign({}, req.body, {user: req.user}))
+            const data = validateFields<CreateRevenue>(revenueSchema, Object.assign({}, req.body))
             const revenue = await this.revenueUsecase.insert(data);
             res.json(revenue)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }
     }
     get = async(req: Request, res: Response): Promise<void> => {
         const revenueSchema = z.object({
-            name: z.string(),
-            value: z.number(),
-            receivedAt: z.date(),
-            user: z.string()
+            name: z.string().optional(),
+            value: z.number().optional(),
+            receivedAt: z.string().optional(),
+            user: z.string().optional()
           });
         try {
             const data = validateFields<GetRevenue>(revenueSchema, req.body)
@@ -71,10 +72,10 @@ class RevenueController {
         const revenueSchema = z.object({
             name: z.string().optional(),
             value: z.number().optional(),
-            receivedAt: z.date().optional()
+            receivedAt: z.string().optional()
           });
         try {
-            const data = validateFields<UpdateRevenue>(revenueSchema, Object.assign({}, req.body, {user: req.user}, {id: req.params.id}))
+            const data = validateFields<UpdateRevenue>(revenueSchema, Object.assign({}, req.body, {id: req.params.id}))
             const revenue = await this.revenueUsecase.update(data);
             res.json(revenue)
         }catch(e: any | unknown){

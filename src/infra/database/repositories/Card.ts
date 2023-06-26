@@ -14,22 +14,22 @@ export class CardRepository {
         return cards
     }
 
-    public async getById(id:string): Promise<Card>{
-        const card = await this.repo.findOneOrFail({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'createdAt', 'updatedAt'], where: {id}, relations: ['type'] });
+    public async getById(id:string): Promise<Card | null>{
+        const card = await this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'createdAt', 'updatedAt'], where: {id}, relations: ['type'] });
         return card
     }
 
-    public async insert(data: CreateCard): Promise<Card>{
+    public async insert(data: CreateCard): Promise<Card | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async update(data: UpdateCard): Promise<Card>{
+    public async update(data: UpdateCard): Promise<Card | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async delete(id: string): Promise<Card>{
-        return this.repo.findOneOrFail({select: ['id', 'number', 'flag', 'limit', 'current', 'close'], where: {id} })
+    public async delete(id: string): Promise<Card | null>{
+        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close'], where: {id} })
     }
 }

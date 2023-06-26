@@ -13,7 +13,7 @@ export class Revenue {
     value: number
 
     @Column({name: 'received_at'})
-    receveidAt: Date
+    receivedAt: Date
 
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date

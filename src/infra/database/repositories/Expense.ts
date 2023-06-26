@@ -14,22 +14,22 @@ export class ExpenseRepository {
         return expenses
     }
 
-    public async getById(id:string): Promise<Expense>{
-        const expense = await this.repo.findOneOrFail({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline', 'createdAt', 'updatedAt'], where: {id}, relations: ['paymentType', 'category'] });
+    public async getById(id:string): Promise<Expense | null>{
+        const expense = await this.repo.findOne({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline', 'createdAt', 'updatedAt'], where: {id}, relations: ['paymentType', 'category'] });
         return expense
     }
 
-    public async insert(data: CreateExpense): Promise<Expense>{
+    public async insert(data: CreateExpense): Promise<Expense | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline',  'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async update(data: UpdateExpense): Promise<Expense>{
+    public async update(data: UpdateExpense): Promise<Expense | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline',  'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async delete(id: string): Promise<Expense>{
-        return this.repo.findOneOrFail({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline'], where: {id} })
+    public async delete(id: string): Promise<Expense | null>{
+        return this.repo.findOne({select: ['id', 'description', 'amount', 'parcels', 'parcelValue', 'deadline'], where: {id} })
     }
 }

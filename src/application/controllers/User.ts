@@ -26,9 +26,9 @@ class UserController {
     }
     get = async(req: Request, res: Response): Promise<void> => {
         const userSchema = z.object({
-            name: z.string(),
-            email: z.string().email(),
-            password: z.string().min(8).max(50),
+            name: z.string().optional(),
+            email: z.string().email().optional(),
+            password: z.string().min(8).max(50).optional(),
           });
         try {
             const data = validateFields<GetUser>(userSchema, req.body)
@@ -48,6 +48,7 @@ class UserController {
             const user = await this.userUsecase.show({id});
             res.json(user)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }

@@ -14,32 +14,32 @@ export class UserRepository {
         return users
     }
 
-    public async getById(id:string): Promise<User>{
-        const user = await this.repo.findOneOrFail({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id}, relations: ['cards', 'revenues', 'expenses'] });
+    public async getById(id:string): Promise<User | null>{
+        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id}, relations: ['cards', 'revenues', 'expenses'] });
         return user
     }
 
-    public async getByToken(token:string): Promise<User>{
-        const user = await this.repo.findOneOrFail({select: ['id', 'name', 'email', 'token', 'createdAt', 'updatedAt'], where: {token} });
+    public async getByToken(token:string): Promise<User | null>{
+        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'token', 'createdAt', 'updatedAt'], where: {token} });
         return user
     }
 
-    public async getByEmail(email: string): Promise<User>{
-        const user = await this.repo.findOneOrFail({select: ['id', 'name', 'email', 'createdAt', 'isVerified', 'updatedAt', 'password'], where: {email}, relations: ['cards', 'revenues', 'expenses'] });
+    public async getByEmail(email: string): Promise<User | null>{
+        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'createdAt', 'isVerified', 'updatedAt', 'password'], where: {email}, relations: ['cards', 'revenues', 'expenses'] });
         return user
     }
 
-    public async insert(data: CreateUser): Promise<User>{
+    public async insert(data: CreateUser): Promise<User | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'name', 'email', 'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'name', 'email', 'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async update(data: UpdateUser): Promise<User>{
+    public async update(data: UpdateUser): Promise<User | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async delete(id: string): Promise<User>{
-        return this.repo.findOneOrFail({select: ['id', 'name', 'email'], where: {id} })
+    public async delete(id: string): Promise<User | null>{
+        return this.repo.findOne({select: ['id', 'name', 'email'], where: {id} })
     }
 }

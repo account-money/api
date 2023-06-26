@@ -18,8 +18,8 @@ export type Expense = {
 
 export type GetExpense = Expense
 export type ShowExpense = {id: string}
-export type CreateExpense = Omit<Expense, 'id' | 'createdAt' | 'updatedAt'>
-export type UpdateExpense = Omit<Expense, 'user' | 'createdAt' | 'updatedAt'>
+export type CreateExpense = Omit<Expense, 'id' | 'parcelValue' | 'createdAt' | 'updatedAt'>
+export type UpdateExpense = Omit<Expense, 'user' | 'parcelValue' | 'createdAt' | 'updatedAt'>
 export type DeleteExpense = {id: string}
 
 export interface IGetExpense {

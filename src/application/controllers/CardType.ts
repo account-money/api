@@ -10,8 +10,8 @@ class CardTypeController {
 
     get = async(req: Request, res: Response): Promise<void> => {
         try {
-            const categoryExpense = await this.cardTypeUsecase.get();
-            res.json(categoryExpense)
+            const cardType = await this.cardTypeUsecase.get();
+            res.json(cardType)
         }catch(e: any | unknown){
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
@@ -19,4 +19,4 @@ class CardTypeController {
     }
 }
 
-export const categoryExpenseController = new CardTypeController(cardTypeUsecase)
+export const cardTypeController = new CardTypeController(cardTypeUsecase)

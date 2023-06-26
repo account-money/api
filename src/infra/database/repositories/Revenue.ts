@@ -10,26 +10,26 @@ export class RevenueRepository {
         this.repo = appDataSource.getRepository(RevenueEntity)
     }
     public async get(){
-        const revenues = await this.repo.find({select: ['id', 'name', 'value', 'receveidAt', 'createdAt', 'updatedAt']});
+        const revenues = await this.repo.find({select: ['id', 'name', 'value', 'receivedAt', 'createdAt', 'updatedAt']});
         return revenues
     }
 
-    public async getById(id:string): Promise<Revenue>{
-        const revenue = await this.repo.findOneOrFail({select: ['id', 'name', 'value', 'receveidAt', 'createdAt', 'updatedAt'], where: {id}, relations: ['type'] });
+    public async getById(id:string): Promise<Revenue | null>{
+        const revenue = await this.repo.findOne({select: ['id', 'name', 'value', 'receivedAt', 'createdAt', 'updatedAt'], where: {id}, relations: ['type'] });
         return revenue
     }
 
-    public async insert(data: CreateRevenue): Promise<Revenue>{
+    public async insert(data: CreateRevenue): Promise<Revenue | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'name', 'value', 'receveidAt',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'name', 'value', 'receivedAt',  'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async update(data: UpdateRevenue): Promise<Revenue>{
+    public async update(data: UpdateRevenue): Promise<Revenue | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'name', 'value', 'receveidAt',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'name', 'value', 'receivedAt',  'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async delete(id: string): Promise<Revenue>{
-        return this.repo.findOneOrFail({select: ['id', 'name', 'value', 'receveidAt'], where: {id} })
+    public async delete(id: string): Promise<Revenue | null>{
+        return this.repo.findOne({select: ['id', 'name', 'value', 'receivedAt'], where: {id} })
     }
 }

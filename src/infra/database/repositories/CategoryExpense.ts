@@ -14,22 +14,22 @@ export class CategoryExpenseRepository {
         return categoryExpenses
     }
 
-    public async getById(id:string): Promise<CategoryExpense>{
-        const categoryExpense = await this.repo.findOneOrFail({select: ['id', 'name'], where: {id} });
+    public async getById(id:string): Promise<CategoryExpense | null>{
+        const categoryExpense = await this.repo.findOne({select: ['id', 'name'], where: {id} });
         return categoryExpense
     }
 
-    public async insert(data: CreateCategoryExpense): Promise<CategoryExpense>{
+    public async insert(data: CreateCategoryExpense): Promise<CategoryExpense | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'name'], where: {id} })
+        return this.repo.findOne({select: ['id', 'name'], where: {id} })
     }
 
-    public async update(data: UpdateCategoryExpense): Promise<CategoryExpense>{
+    public async update(data: UpdateCategoryExpense): Promise<CategoryExpense | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOneOrFail({select: ['id', 'name'], where: {id} })
+        return this.repo.findOne({select: ['id', 'name'], where: {id} })
     }
 
-    public async delete(id: string): Promise<CategoryExpense>{
-        return this.repo.findOneOrFail({select: ['id', 'name'], where: {id} })
+    public async delete(id: string): Promise<CategoryExpense | null>{
+        return this.repo.findOne({select: ['id', 'name'], where: {id} })
     }
 }

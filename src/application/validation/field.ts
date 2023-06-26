@@ -5,7 +5,7 @@ export function validateFields<T>(schema: z.ZodSchema, data: T): T {
     try {
         return schema.parse(data)
     } catch (error: any) {
-        const errors = error.errors.map((error: {message: string}) => error.message)
+        const errors = error.errors.map((error: {message: string, path: string[]}) => ({message: error.message, path: error.path}))
         throw new BadRequest(errors)
     }
 }

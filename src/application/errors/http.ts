@@ -1,10 +1,10 @@
 export class BadRequest extends Error{
     private readonly _status = 400
 
-    constructor(private readonly _errors: string[] | string){
+    constructor(private readonly _errors: any[] | string){
         super('Bad Request')
     }
-    public get errors(): string[] | string {
+    public get errors(): any[] | string {
         return this._errors;
     }
 

@@ -14,7 +14,7 @@ class CategoryExpenseController {
             name: z.string(),
           });
         try {
-            const data = validateFields<CreateCategoryExpense>(categoryExpenseSchema, Object.assign({}, req.body, {user: req.user}))
+            const data = validateFields<CreateCategoryExpense>(categoryExpenseSchema, Object.assign({}, req.body))
             const categoryExpense = await this.categoryExpenseUsecase.insert(data);
             res.json(categoryExpense)
         }catch(e: any | unknown){
@@ -24,7 +24,7 @@ class CategoryExpenseController {
     }
     get = async(req: Request, res: Response): Promise<void> => {
         const categoryExpenseSchema = z.object({
-            name: z.string(),
+            name: z.string().optional(),
           });
         try {
             const data = validateFields<GetCategoryExpense>(categoryExpenseSchema, req.body)
@@ -66,7 +66,7 @@ class CategoryExpenseController {
             name: z.string().optional(),
           });
         try {
-            const data = validateFields<UpdateCategoryExpense>(categoryExpenseSchema, Object.assign({}, req.body, {user: req.user}, {id: req.params.id}))
+            const data = validateFields<UpdateCategoryExpense>(categoryExpenseSchema, Object.assign({}, req.body, {id: req.params.id}))
             const categoryExpense = await this.categoryExpenseUsecase.update(data);
             res.json(categoryExpense)
         }catch(e: any | unknown){
