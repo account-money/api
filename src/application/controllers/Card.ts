@@ -12,11 +12,12 @@ class CardController {
     insert = async(req: Request, res: Response): Promise<void> => {
         const cardSchema = z.object({
             flag: z.string(),
-            number: z.number(),
-            limit: z.number(),
-            current: z.number(),
-            close: z.date(),
-            type: z.string(),
+            number: z.string(),
+            limit: z.number().optional(),
+            current: z.number().optional(),
+            close: z.string().optional(),
+            deadline: z.string().optional(),
+            type: z.number(),
             user: z.string()
           });
         try {
@@ -24,6 +25,7 @@ class CardController {
             const card = await this.cardUsecase.insert(data);
             res.json(card)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }
@@ -31,11 +33,11 @@ class CardController {
     get = async(req: Request, res: Response): Promise<void> => {
         const cardSchema = z.object({
             flag: z.string().optional(),
-            number: z.number().optional(),
+            number: z.string().optional(),
             limit: z.number().optional(),
             current: z.number().optional(),
-            close: z.date().optional(),
-            type: z.string().optional(),
+            close: z.string().optional(),
+            type: z.number().optional(),
             user: z.string().optional()
           });
         try {
@@ -76,11 +78,12 @@ class CardController {
     update = async(req: Request, res: Response): Promise<void> => {
         const cardSchema = z.object({
             flag: z.string().optional(),
-            number: z.number().optional(),
+            number: z.string().optional(),
             limit: z.number().optional(),
             current: z.number().optional(),
-            close: z.date().optional(),
-            type: z.string().optional()
+            close: z.string().optional(),
+            deadline: z.string().optional(),
+            type: z.number().optional()
           });
         try {
             const data = validateFields<UpdateCard>(cardSchema, Object.assign({}, req.body, {id: req.params.id}))

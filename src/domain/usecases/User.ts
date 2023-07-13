@@ -5,13 +5,14 @@ import { v4 } from "uuid";
 import bcrypt from 'bcrypt'
 import { env } from "@/config/env";
 import { BadRequest } from "@/application/errors/http";
+import jwt from "jsonwebtoken";
 
 export class UserUsecase implements IGetUser, ICreateUser, IUpdateUser, IShowUser, IDeleteUser  {
     constructor(private readonly userRepo: UserRepository){}
-    async insert(data: CreateUser): Promise<User> {
+    async insert(data: CreateUser): Promise<any> {
         data.password = await bcrypt.hash(data.password!, env.salt)
         const user =  await this.userRepo.insert(Object.assign({}, data, {id: v4()}))
-        if (user) return user
+        if (user) return {user, token: jwt.sign({id: user.id, email: user.email}, env.secret, {expiresIn: '1d'})}
         throw new BadRequest('user not created')
 
     }

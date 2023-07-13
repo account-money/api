@@ -10,26 +10,26 @@ export class CardRepository {
         this.repo = appDataSource.getRepository(CardEntity)
     }
     public async get(){
-        const cards = await this.repo.find({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'createdAt', 'updatedAt']});
+        const cards = await this.repo.find({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'deadline', 'createdAt', 'updatedAt'], relations: ['type', 'expenses']});
         return cards
     }
 
     public async getById(id:string): Promise<Card | null>{
-        const card = await this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'createdAt', 'updatedAt'], where: {id}, relations: ['type'] });
+        const card = await this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'deadline','createdAt', 'updatedAt'], where: {id}, relations: ['type', 'expenses'] });
         return card
     }
 
     public async insert(data: CreateCard): Promise<Card | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'deadline','createdAt', 'updatedAt'], where: {id} })
     }
 
     public async update(data: UpdateCard): Promise<Card | null>{
         const {id} = await this.repo.save(data);
-        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'createdAt', 'updatedAt'], where: {id} })
+        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close',  'deadline','createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async delete(id: string): Promise<Card | null>{
-        return this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close'], where: {id} })
+    public async delete(id: string): Promise<Card | any>{
+        return this.repo.delete({id})
     }
 }

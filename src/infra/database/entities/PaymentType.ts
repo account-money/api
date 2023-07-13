@@ -4,7 +4,7 @@ import { Expense } from "./Expense"
 @Entity({name: 'revenues'})
 export class PaymentType {
     @PrimaryColumn()
-    id: string
+    id: number
 
     @Column()
     name: string

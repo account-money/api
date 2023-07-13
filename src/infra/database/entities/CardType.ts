@@ -4,7 +4,7 @@ import { Card } from "./Card"
 @Entity({name: 'cards_type'})
 export class CardType {
     @PrimaryColumn()
-    id: string
+    id: number
 
     @Column()
     name: string

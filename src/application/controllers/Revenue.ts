@@ -31,13 +31,13 @@ class RevenueController {
             name: z.string().optional(),
             value: z.number().optional(),
             receivedAt: z.string().optional(),
-            user: z.string().optional()
           });
         try {
             const data = validateFields<GetRevenue>(revenueSchema, req.body)
             const revenue = await this.revenueUsecase.get(data);
             res.json(revenue)
         }catch(e: any | unknown){
+
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }
@@ -70,15 +70,18 @@ class RevenueController {
     }
     update = async(req: Request, res: Response): Promise<void> => {
         const revenueSchema = z.object({
+            id: z.string(),
             name: z.string().optional(),
             value: z.number().optional(),
             receivedAt: z.string().optional()
           });
         try {
             const data = validateFields<UpdateRevenue>(revenueSchema, Object.assign({}, req.body, {id: req.params.id}))
+            console.log(data)
             const revenue = await this.revenueUsecase.update(data);
             res.json(revenue)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }

@@ -2,6 +2,7 @@ import { Entity, PrimaryColumn, Column, UpdateDateColumn, CreateDateColumn, Many
 import { User } from "./User"
 import { CategoryExpense } from "./CategoryExpense"
 import { PaymentType } from "./PaymentType"
+import { Card } from "./Card"
 
 @Entity({name: 'expenses'})
 export class Expense {
@@ -17,11 +18,8 @@ export class Expense {
     @Column()
     parcels: number
 
-    @Column({name: 'parcel_value', type: 'float'})
-    parcelValue: number
-    
-    @Column()
-    deadline: Date
+    @Column({name: 'paid_at', default: false})
+    paidAt: boolean
 
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date
@@ -40,4 +38,8 @@ export class Expense {
     @ManyToOne(() => PaymentType, PaymentType => PaymentType.expenses, {nullable: false})
     @JoinColumn({name: 'id_payment', referencedColumnName: 'id'})
     paymentType: PaymentType
+
+    @ManyToOne(() => Card, Card => Card.expenses, {nullable: true})
+    @JoinColumn({name: 'id_card', referencedColumnName: 'id'})
+    card: Card
 }

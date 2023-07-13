@@ -15,7 +15,7 @@ export class UserRepository {
     }
 
     public async getById(id:string): Promise<User | null>{
-        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id}, relations: ['cards', 'revenues', 'expenses'] });
+        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id}, relations: ['cards', 'cards.type', 'revenues', 'expenses', 'categories'] });
         return user
     }
 
@@ -25,7 +25,7 @@ export class UserRepository {
     }
 
     public async getByEmail(email: string): Promise<User | null>{
-        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'createdAt', 'isVerified', 'updatedAt', 'password'], where: {email}, relations: ['cards', 'revenues', 'expenses'] });
+        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'createdAt', 'isVerified', 'updatedAt', 'password'], where: {email}, relations: ['cards', 'revenues', 'expenses', 'categories'] });
         return user
     }
 
@@ -39,7 +39,7 @@ export class UserRepository {
         return this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id} })
     }
 
-    public async delete(id: string): Promise<User | null>{
-        return this.repo.findOne({select: ['id', 'name', 'email'], where: {id} })
+    public async delete(id: string): Promise<User | any>{
+        return this.repo.delete({id} )
     }
 }

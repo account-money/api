@@ -11,7 +11,7 @@ export class CreateCardsTable1687453433668 implements MigrationInterface {
             },
             {
                 name: 'number',
-                type: 'int',
+                type: 'varchar',
             },
             {
                 name: 'flag',
@@ -20,10 +20,12 @@ export class CreateCardsTable1687453433668 implements MigrationInterface {
             {
                 name: 'limit',
                 type: 'float',
+                isNullable: true
             },
             {
                 name: 'current_value',
                 type: 'float',
+                isNullable: true
             },
             {
                 name: 'id_type',
@@ -35,7 +37,13 @@ export class CreateCardsTable1687453433668 implements MigrationInterface {
             },
             {
                 name: 'close',
-                type: 'timestamp'
+                type: 'varchar',
+                isNullable: true
+            },
+            {
+                name: 'deadline',
+                type: 'varchar',
+                isNullable: true
             },
             {
                 name: 'created_at',
@@ -49,7 +57,7 @@ export class CreateCardsTable1687453433668 implements MigrationInterface {
             }
         ]}))
 
-        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user']})
+        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user'], onDelete: 'CASCADE'})
 
         const typeFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'cards_type', columnNames: ['id_type']})
 

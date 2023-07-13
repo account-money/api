@@ -1,3 +1,4 @@
+import { Card } from "./Card"
 import { CategoryExpense } from "./CategoryExpense"
 import { PaymentType } from "./PaymentType"
 import { User } from "./User"
@@ -6,9 +7,10 @@ export type Expense = {
     id: string
     description?: string
     amount?: number
+    card?: Card
     parcels?: number
-    parcelValue?: number
-    deadline?: string | Date
+    parcelsPaid?: number
+    paidAt?: boolean
     category?: CategoryExpense
     user?: User
     paymentType?: PaymentType
@@ -18,8 +20,8 @@ export type Expense = {
 
 export type GetExpense = Expense
 export type ShowExpense = {id: string}
-export type CreateExpense = Omit<Expense, 'id' | 'parcelValue' | 'createdAt' | 'updatedAt'>
-export type UpdateExpense = Omit<Expense, 'user' | 'parcelValue' | 'createdAt' | 'updatedAt'>
+export type CreateExpense = Omit<Expense, 'id' | 'createdAt' | 'updatedAt' >
+export type UpdateExpense = Omit<Expense, 'user' | 'card' | 'createdAt' | 'updatedAt' >
 export type DeleteExpense = {id: string}
 
 export interface IGetExpense {

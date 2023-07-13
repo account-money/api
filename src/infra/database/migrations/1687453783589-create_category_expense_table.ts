@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm"
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm"
 
 export class CreateCategoryExpenseTable1687453783589 implements MigrationInterface {
 
@@ -13,9 +13,15 @@ export class CreateCategoryExpenseTable1687453783589 implements MigrationInterfa
                 name: 'name',
                 type: 'varchar',
             },
+            {
+                name: 'id_user',
+                type: 'varchar',
+            },
         ]}))
 
-        await queryRunner.query("INSERT INTO categories_expense (id, name) VALUES (1, 'Casa'), (2, 'Carro'), (3, 'Alimentação'), (4, 'PET'), (5, 'Viagem');")
+        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user'], onDelete: 'CASCADE'})
+
+        await queryRunner.createForeignKey('categories_expense', userFK)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

@@ -29,7 +29,7 @@ export class CategoryExpenseRepository {
         return this.repo.findOne({select: ['id', 'name'], where: {id} })
     }
 
-    public async delete(id: string): Promise<CategoryExpense | null>{
-        return this.repo.findOne({select: ['id', 'name'], where: {id} })
+    public async delete(id: string): Promise<CategoryExpense | any>{
+        return this.repo.delete({id})
     }
 }

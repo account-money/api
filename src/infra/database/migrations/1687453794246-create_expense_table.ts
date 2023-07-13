@@ -22,10 +22,6 @@ export class CreateExpenseTable1687453794246 implements MigrationInterface {
                 type: 'int',
             },
             {
-                name: 'parcel_value',
-                type: 'float',
-            },
-            {
                 name: 'id_user',
                 type: 'varchar',
             },
@@ -34,12 +30,18 @@ export class CreateExpenseTable1687453794246 implements MigrationInterface {
                 type: 'varchar',
             },
             {
+                name: 'id_card',
+                type: 'varchar',
+                isNullable: true
+            },
+            {
                 name: 'id_category',
                 type: 'varchar',
             },
             {
-                name: 'deadline',
-                type: 'timestamp'
+                name: 'paid_at',
+                type: 'boolean',
+                default: false
             },
             {
                 name: 'created_at',
@@ -53,13 +55,15 @@ export class CreateExpenseTable1687453794246 implements MigrationInterface {
             }
         ]}))
 
-        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user']})
+        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user'], onDelete: 'CASCADE'})
 
-        const categoryFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'categories_expense', columnNames: ['id_payment']})
+        const categoryFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'categories_expense', columnNames: ['id_category']})
 
-        const paymentFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'payments_type', columnNames: ['id_category']})
+        const paymentFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'payments_type', columnNames: ['id_payment']})
 
-        await queryRunner.createForeignKeys('expenses', [userFK, paymentFK, categoryFK])
+        const cardFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'cards', columnNames: ['id_card']})
+
+        await queryRunner.createForeignKeys('expenses', [userFK, paymentFK, categoryFK, cardFK])
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

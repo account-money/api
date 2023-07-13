@@ -1,6 +1,7 @@
 import { Entity, PrimaryColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, JoinColumn, OneToMany, OneToOne } from "typeorm"
 import { User } from "./User"
 import { CardType } from "./CardType"
+import { Expense } from "./Expense"
 
 @Entity({name: 'cards'})
 export class Card {
@@ -8,19 +9,22 @@ export class Card {
     id: string
 
     @Column()
-    number: number
+    number: string
 
     @Column()
     flag: string
 
-    @Column({type: 'float'})
+    @Column({type: 'float', nullable: true})
     limit: number
 
-    @Column({name: 'current_value', type: 'float'})
+    @Column({name: 'current_value', type: 'float', nullable: true})
     current: number
 
-    @Column()
-    close: Date
+    @Column({nullable: true})
+    close: string
+
+    @Column({nullable: true})
+    deadline: string
 
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date
@@ -35,4 +39,7 @@ export class Card {
     @ManyToOne(() => User, user => user.cards)
     @JoinColumn({name: 'id_user', referencedColumnName: 'id'})
     user: User
+
+    @OneToMany(() => Expense, expense => expense.card)
+    expenses: Expense[]
 }

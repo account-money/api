@@ -5,4 +5,5 @@ export const env = {
     urlDB: process.env.DB_URL,
     main: process.env.MAIN!,
     salt: parseInt(process.env.BCRYPT_SALT!),
+    secret: process.env.SECRET!,
 }

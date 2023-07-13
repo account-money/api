@@ -4,7 +4,7 @@ import express, { Request, Response } from 'express';
 import {env} from '@/config/env';
 import cors from 'cors';
 import { AppDataSource } from './infra/database/data-source';
-import { routerCard, routerCardType, routerCategoryExpense, routerExpense, routerPaymentType, routerRevenue, routerUser } from "./routes";
+import { routerCard, routerCardType, routerCategoryExpense, routerExpense, routerLogin, routerPaymentType, routerRevenue, routerUser } from "./routes";
 
 const app = express();
 app.use(cors({
@@ -16,7 +16,8 @@ app.use(cors({
     origin: '*'
 }));
 
-app.use('/api/user', routerUser)
+app.use('/api/users', routerUser)
+app.use('/api/login', routerLogin)
 app.use('/api/revenue', routerRevenue)
 app.use('/api/card', routerCard)
 app.use('/api/expense', routerExpense)

@@ -14,17 +14,17 @@ class ExpenseController {
             description: z.string(),
             amount: z.number(),
             parcels: z.number(),
-            close: z.string(),
-            deadline: z.string(),
-            category: z.number(),
+            category: z.string(),
             paymentType: z.number(),
-            user: z.string()
+            user: z.string(),
+            card: z.string()
           });
         try {
             const data = validateFields<CreateExpense>(expenseSchema, Object.assign({}, req.body))
             const expense = await this.expenseUsecase.insert(data);
             res.json(expense)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }
@@ -34,7 +34,6 @@ class ExpenseController {
             description: z.string().optional(),
             amount: z.number().optional(),
             parcels: z.number().optional(),
-            parcelValue: z.number().optional(),
             close: z.string().optional(),
             deadline: z.string().optional(),
             category: z.number().optional(),
@@ -72,18 +71,22 @@ class ExpenseController {
             const expense = await this.expenseUsecase.delete({id});
             res.json(expense)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }
     }
     update = async(req: Request, res: Response): Promise<void> => {
         const expenseSchema = z.object({
+            id: z.string(),
             description: z.string().optional(),
             amount: z.number().optional(),
             parcels: z.number().optional(),
+            parcelsPaid: z.number().optional(),
             close: z.string().optional(),
+            paidAt: z.boolean().optional(),
             deadline: z.string().optional(),
-            category: z.number().optional(),
+            category: z.string().optional(),
             paymentType: z.number().optional(),
           });
         try {
@@ -91,6 +94,7 @@ class ExpenseController {
             const expense = await this.expenseUsecase.update(data);
             res.json(expense)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }

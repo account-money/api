@@ -4,7 +4,7 @@ export type Revenue = {
     id: string
     name?: string
     value?: number
-    receivedAt?: String | Date
+    receivedAt?: string | Date
     createdAt?: string | Date
     updatedAt?: string | Date
     user?: User

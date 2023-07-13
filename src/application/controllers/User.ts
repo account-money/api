@@ -11,7 +11,7 @@ class UserController {
 
     insert = async(req: Request, res: Response): Promise<void> => {
         const userSchema = z.object({
-            name: z.string(),
+            name: z.string().min(4),
             email: z.string().email(),
             password: z.string().min(8).max(50)
           });
@@ -62,6 +62,7 @@ class UserController {
             const user = await this.userUsecase.delete({id});
             res.json(user)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }

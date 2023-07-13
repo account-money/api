@@ -12,6 +12,7 @@ class CategoryExpenseController {
     insert = async(req: Request, res: Response): Promise<void> => {
         const categoryExpenseSchema = z.object({
             name: z.string(),
+            user: z.string()
           });
         try {
             const data = validateFields<CreateCategoryExpense>(categoryExpenseSchema, Object.assign({}, req.body))
@@ -63,6 +64,7 @@ class CategoryExpenseController {
     }
     update = async(req: Request, res: Response): Promise<void> => {
         const categoryExpenseSchema = z.object({
+            id: z.string(),
             name: z.string().optional(),
           });
         try {

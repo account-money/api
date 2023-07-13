@@ -1,6 +1,6 @@
 
 export type PaymentType = {
-    id: string
+    id: number
     name?: string
 }
 

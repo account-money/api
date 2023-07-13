@@ -30,9 +30,26 @@ export class Forbbiden extends Error{
     }
 }
 
-export class ServerError extends Error{
+export class Unauthorized extends Error{
+    static readonly _status = 401;
     
+
+    constructor(){
+        super('Unauthenticated')
+    }
+
+    public get status() {
+        return Unauthorized._status;
+    }
+}
+
+export class ServerError extends Error{
+    static readonly _status = 500;
+
     constructor(){
         super('Server error. Try again later.')
+    }
+    public get status() {
+        return ServerError._status;
     }
 }

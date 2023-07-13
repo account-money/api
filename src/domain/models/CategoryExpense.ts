@@ -1,7 +1,9 @@
+import { User } from "./User"
 
 export type CategoryExpense = {
     id: string
     name?: string
+    user?: User
 }
 
 export type GetCategoryExpense = CategoryExpense

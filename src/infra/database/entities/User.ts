@@ -2,6 +2,7 @@ import { Entity, PrimaryColumn, Column, UpdateDateColumn, CreateDateColumn, Many
 import { Revenue } from "./revenue"
 import { Card } from "./Card"
 import { Expense } from "./Expense"
+import { CategoryExpense } from "./CategoryExpense"
 
 @Entity({name: 'users'})
 export class User {
@@ -40,4 +41,8 @@ export class User {
 
     @OneToMany(() => Expense, expense => expense.user)
     expenses: Expense[]
+
+    @OneToMany(() => CategoryExpense, category => category.user)
+    categories: CategoryExpense[]
+
 }

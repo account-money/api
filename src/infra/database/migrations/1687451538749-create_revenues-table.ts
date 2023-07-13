@@ -37,7 +37,7 @@ export class CreateRevenuesTable1687451538749 implements MigrationInterface {
             }
         ]}))
 
-        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user']})
+        const userFK = new TableForeignKey({referencedColumnNames: ['id'], referencedTableName: 'users', columnNames: ['id_user'], onDelete: 'CASCADE'})
 
         await queryRunner.createForeignKey('revenues', userFK)
     }
