@@ -15,7 +15,7 @@ export class CardRepository {
     }
 
     public async getById(id:string): Promise<Card | null>{
-        const card = await this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'deadline','createdAt', 'updatedAt'], where: {id}, relations: ['type', 'expenses'] });
+        const card = await this.repo.findOne({select: ['id', 'number', 'flag', 'limit', 'current', 'close', 'deadline','createdAt', 'updatedAt'], where: {id}, relations: ['type', 'expenses', 'expenses.category'] });
         return card
     }
 

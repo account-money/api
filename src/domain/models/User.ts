@@ -13,12 +13,12 @@ export type User = {
     revenues?: Revenue[]
     cards?: Card[]
     expenses?: Expense[]
-    createdAt?: string | Date
-    updatedAt?: string | Date
+    createdAt?: Date
+    updatedAt?: Date
 }
 
-export type GetUser = Omit<User, 'isVerified' | 'token'>
-export type ShowUser = {id: string}
+export type GetUser = Omit<User, 'isVerified' | 'token'> 
+export type ShowUser = {id: string} & {month?: number}
 export type CreateUser = Omit<User, 'id' | 'isVerified' | 'isAdmin' | 'token' | 'createdAt' | 'updatedAt'>
 export type UpdateUser = Omit<User, 'isVerified' | 'isAdmin' | 'createdAt' | 'updatedAt'>
 export type DeleteUser = {id: string}
@@ -28,7 +28,7 @@ export interface IGetUser {
 }
 
 export interface IShowUser {
-    show: (user: ShowUser) => Promise<User>
+    show: (user: ShowUser & {month?: number}) => Promise<User>
 }
 
 export interface ICreateUser {

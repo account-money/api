@@ -4,9 +4,10 @@ import {Router} from 'express'
 
 const router = Router()
 
-router.get('/', authenticate, expenseController.get)
+router.get('/', expenseController.get)
 router.get('/:id', authenticate, expenseController.show)
 router.post('/', authenticate, expenseController.insert)
+router.post('/paid/:id', authenticate, expenseController.paid)
 router.put('/:id', authenticate, expenseController.update)
 router.delete('/:id', authenticate, expenseController.delete)
 

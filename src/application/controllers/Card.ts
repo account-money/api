@@ -4,7 +4,7 @@ import {z} from 'zod'
 import { validateFields } from "../validation/field";
 import { CreateCard, DeleteCard, GetCard, Card, ShowCard, UpdateCard } from "@/domain/models/Card";
 import { BadRequest, ServerError } from "../errors/http";
-
+import {Expense} from "@/domain/models/Expense";
 
 class CardController {
     constructor(private readonly cardUsecase: CardUsecase){}
@@ -56,6 +56,34 @@ class CardController {
         try {
             const {id} = validateFields<ShowCard>(cardSchema, {id: req.params.id})
             const card = await this.cardUsecase.show({id});
+            res.json(card)
+        }catch(e: any | unknown){
+            if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
+            else res.status(500).json({error: {name: new ServerError().message}})
+        }
+    }
+    paid = async(req: Request, res: Response): Promise<void> => {
+        const cardSchema = z.object({
+            id: z.string(),
+            expenses: z.any(),
+            value: z.number()
+          });
+        try {
+            const data = validateFields<{id: string, expenses: any, value: number}>(cardSchema, {id: req.params.id, ...req.body})
+            const card = await this.cardUsecase.paid(data);
+            res.json(card)
+        }catch(e: any | unknown){
+            if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
+            else res.status(500).json({error: {name: new ServerError().message}})
+        }
+    }
+    invoice = async(req: Request, res: Response): Promise<void> => {
+        const cardSchema = z.object({
+            id: z.string(),
+          });
+        try {
+            const {id} = validateFields<ShowCard>(cardSchema, {id: req.params.id})
+            const card = await this.cardUsecase.invoice({id});
             res.json(card)
         }catch(e: any | unknown){
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})

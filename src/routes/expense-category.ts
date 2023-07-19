@@ -5,6 +5,7 @@ import {Router} from 'express'
 const router = Router()
 
 router.get('/', authenticate, categoryExpenseController.get)
+router.get('/by-user/:user', authenticate, categoryExpenseController.getByUser)
 router.get('/:id', authenticate, categoryExpenseController.show)
 router.post('/', authenticate, categoryExpenseController.insert)
 router.put('/:id', authenticate, categoryExpenseController.update)

@@ -42,10 +42,11 @@ class UserController {
     show = async(req: Request, res: Response): Promise<void> => {
         const userSchema = z.object({
             id: z.string(),
+            month: z.any().optional()
           });
         try {
-            const {id} = validateFields<ShowUser>(userSchema, {id: req.params.id})
-            const user = await this.userUsecase.show({id});
+            const {id, month} = validateFields<ShowUser>(userSchema, {id: req.params.id, month: Number(req.query.month)})
+            const user = await this.userUsecase.show({id, month});
             res.json(user)
         }catch(e: any | unknown){
             console.log(e)

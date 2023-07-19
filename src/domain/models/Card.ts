@@ -14,8 +14,8 @@ export type Card = {
     expenses?: Expense[]
     type?: CardType
     user?: User
-    createdAt?: string | Date
-    updatedAt?: string | Date
+    createdAt?: Date
+    updatedAt?: Date
 }
 
 export type GetCard = Card

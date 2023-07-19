@@ -22,6 +22,11 @@ export class CategoryExpenseUsecase implements IGetCategoryExpense, ICreateCateg
     async get(data?: GetCategoryExpense): Promise<CategoryExpense[]> {
         return await this.categoryExpenseRepo.get()
     }
+
+    async getByUser({user}: {user: string}): Promise<CategoryExpense[]> {
+        return await this.categoryExpenseRepo.getByUser(user)
+    }
+    
     async show({id}: ShowCategoryExpense): Promise<CategoryExpense> {
         const expenseCategory = await this.categoryExpenseRepo.getById(id)
         if (expenseCategory) return expenseCategory

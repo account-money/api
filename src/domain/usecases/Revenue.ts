@@ -20,6 +20,9 @@ export class RevenueUsecase implements IGetRevenue, ICreateRevenue, IUpdateReven
     async get(data?: GetRevenue): Promise<Revenue[]> {
         return await this.revenueRepo.get()
     }
+    async getByUser(user: string): Promise<Revenue[]> {
+        return await this.revenueRepo.getByUser(user)
+    }
     async show({id}: ShowRevenue): Promise<Revenue> {
         const revenue = await this.revenueRepo.getById(id)
         if (revenue) return revenue

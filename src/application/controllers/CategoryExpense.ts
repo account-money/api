@@ -36,6 +36,19 @@ class CategoryExpenseController {
             else res.status(500).json({error: {name: new ServerError().message}})
         }
     }
+    getByUser = async(req: Request, res: Response): Promise<void> => {
+        const categoryExpenseSchema = z.object({
+            user: z.string(),
+          });
+        try {
+            const data = validateFields<{user: string}>(categoryExpenseSchema, {user: req.params.user})
+            const categoryExpense = await this.categoryExpenseUsecase.getByUser(data);
+            res.json(categoryExpense)
+        }catch(e: any | unknown){
+            if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
+            else res.status(500).json({error: {name: new ServerError().message}})
+        }
+    }
     show = async(req: Request, res: Response): Promise<void> => {
         const categoryExpenseSchema = z.object({
             id: z.string(),

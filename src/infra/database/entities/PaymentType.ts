@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, JoinColumn, OneToMany, OneToOne } from "typeorm"
 import { Expense } from "./Expense"
 
-@Entity({name: 'revenues'})
+@Entity({name: 'payments_type'})
 export class PaymentType {
     @PrimaryColumn()
     id: number

@@ -14,7 +14,7 @@ export class BadRequest extends Error{
 }
 
 export class Forbbiden extends Error{
-    private readonly _status = 404;
+    static readonly _status = 404;
     
 
     constructor(private readonly _error: string){
@@ -26,7 +26,7 @@ export class Forbbiden extends Error{
     }
 
     public get status() {
-        return this._status;
+        return Forbbiden._status;
     }
 }
 

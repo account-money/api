@@ -15,7 +15,7 @@ export class UserRepository {
     }
 
     public async getById(id:string): Promise<User | null>{
-        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'createdAt', 'updatedAt'], where: {id}, relations: ['cards', 'cards.type', 'revenues', 'expenses', 'categories'] });
+        const user = await this.repo.findOne({select: ['id', 'name', 'email', 'isVerified', 'isAdmin', 'createdAt', 'updatedAt'], where: {id}, relations: ['cards', 'cards.type', 'revenues', 'expenses', 'expenses.paymentType', 'expenses.category', 'categories'] });
         return user
     }
 

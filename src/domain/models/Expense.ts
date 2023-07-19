@@ -9,23 +9,40 @@ export type Expense = {
     amount?: number
     card?: Card
     parcels?: number
-    parcelsPaid?: number
+    parcelNumber?: number
+    deadline?: Date
     paidAt?: boolean
     category?: CategoryExpense
     user?: User
     paymentType?: PaymentType
-    createdAt?: string | Date
-    updatedAt?: string | Date
+    createdAt?: Date
+    updatedAt?: Date
 }
 
-export type GetExpense = Expense
+export type filterExpense = {
+    description?: string
+    amount?: number
+    card?: Card
+    parcels?: number
+    deadline?: Date
+    paidAt?: boolean
+    category?: CategoryExpense
+    user?: User
+    month?: number
+    paymentType?: PaymentType
+    createdAt?: Date
+    updatedAt?: Date
+
+}
+
+export type GetExpense = filterExpense
 export type ShowExpense = {id: string}
 export type CreateExpense = Omit<Expense, 'id' | 'createdAt' | 'updatedAt' >
 export type UpdateExpense = Omit<Expense, 'user' | 'card' | 'createdAt' | 'updatedAt' >
 export type DeleteExpense = {id: string}
 
 export interface IGetExpense {
-    get: (user?: GetExpense) => Promise<Expense[]>
+    get: (user: GetExpense) => Promise<Expense[]>
 }
 
 export interface IShowExpense {

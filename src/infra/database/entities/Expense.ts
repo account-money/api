@@ -18,6 +18,12 @@ export class Expense {
     @Column()
     parcels: number
 
+    @Column({name: 'parcel_number'})
+    parcelNumber: number
+
+    @Column({name: 'deadline'})
+    deadline: Date
+
     @Column({name: 'paid_at', default: false})
     paidAt: boolean
 

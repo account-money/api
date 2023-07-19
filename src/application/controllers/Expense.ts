@@ -30,21 +30,13 @@ class ExpenseController {
         }
     }
     get = async(req: Request, res: Response): Promise<void> => {
-        const expenseSchema = z.object({
-            description: z.string().optional(),
-            amount: z.number().optional(),
-            parcels: z.number().optional(),
-            close: z.string().optional(),
-            deadline: z.string().optional(),
-            category: z.number().optional(),
-            paymentType: z.number().optional(),
-            user: z.string().optional()
-          });
         try {
-            const data = validateFields<GetExpense>(expenseSchema, req.body)
-            const expense = await this.expenseUsecase.get(data);
+            const filter = {month: Number(req.query.month), user: {id: String(req.query.user), ...req.body}}
+            console.log(filter)
+            const expense = await this.expenseUsecase.get(filter);
             res.json(expense)
         }catch(e: any | unknown){
+            console.log(e)
             if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
             else res.status(500).json({error: {name: new ServerError().message}})
         }
@@ -69,6 +61,20 @@ class ExpenseController {
         try {
             const {id} = validateFields<DeleteExpense>(expenseSchema, {id: req.params.id})
             const expense = await this.expenseUsecase.delete({id});
+            res.json(expense)
+        }catch(e: any | unknown){
+            console.log(e)
+            if (e instanceof BadRequest) res.status(e.status).json({error: {name: e.message, messages: e.errors}})
+            else res.status(500).json({error: {name: new ServerError().message}})
+        }
+    }
+    paid = async(req: Request, res: Response): Promise<void> => {
+        const expenseSchema = z.object({
+            id: z.string(),
+          });
+        try {
+            const {id} = validateFields<DeleteExpense>(expenseSchema, {id: req.params.id})
+            const expense = await this.expenseUsecase.paid({id});
             res.json(expense)
         }catch(e: any | unknown){
             console.log(e)

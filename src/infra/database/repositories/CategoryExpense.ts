@@ -18,6 +18,11 @@ export class CategoryExpenseRepository {
         const categoryExpense = await this.repo.findOne({select: ['id', 'name'], where: {id} });
         return categoryExpense
     }
+    
+    public async getByUser(user: string): Promise<CategoryExpense[]>{
+        const revenues = await this.repo.find({select: ['id', 'name'], where: {user: {id: user}}, relations: ['user'] });
+        return revenues
+    }
 
     public async insert(data: CreateCategoryExpense): Promise<CategoryExpense | null>{
         const {id} = await this.repo.save(data);
